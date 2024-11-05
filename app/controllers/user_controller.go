@@ -13,7 +13,6 @@ type userController struct {
 	userService serviceInterface.UserServiceInterface
 }
 
-// NewUserController cria uma nova instância de userController
 func NewUserController(service serviceInterface.UserServiceInterface) *userController {
 	return &userController{userService: service}
 }
@@ -28,7 +27,6 @@ func (ctrl *userController) GetUserById(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
-// GetAllUsers retorna todos os usuários do banco
 func (ctrl *userController) GetAllUsers(c *gin.Context) {
 	users, err := ctrl.userService.GetAllUsers()
 	if err != nil {
@@ -38,7 +36,6 @@ func (ctrl *userController) GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
-// CreateUser cria um novo usuário
 func (ctrl *userController) CreateUser(c *gin.Context) {
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -65,7 +62,7 @@ func (ctrl *userController) UpdateUser(c *gin.Context) {
 	userID.ID = c.Param("id")
 	userID.Name = user.Name
 	userID.Email = user.Email
-	userID.Senha = user.Senha
+	userID.Password = user.Password
 	userID.Age = user.Age
 
 	if err := ctrl.userService.UpdateUser(&userID); err != nil {

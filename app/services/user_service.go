@@ -10,7 +10,6 @@ type userService struct {
 	userRepo repositoryInterface.UserRepositoryInterface
 }
 
-// Garante que userService implementa interfaces.UserServiceInterface
 var _ interfaces.UserServiceInterface = &userService{}
 
 func NewUserService(repo repositoryInterface.UserRepositoryInterface) interfaces.UserServiceInterface {
@@ -25,7 +24,6 @@ func (s *userService) GetAllUsers() ([]*model.User, error) {
 	return s.userRepo.GetAllUsers()
 }
 
-// CreateUser cria um novo usuário usando o repositório
 func (s *userService) CreateUser(user *model.User) error {
 	return s.userRepo.CreateUser(user)
 }

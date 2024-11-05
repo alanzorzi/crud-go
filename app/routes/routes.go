@@ -2,6 +2,7 @@ package routes
 
 import (
 	"database/sql"
+	"github.com/alanzorzi/crud-go/app/middleware"
 
 	"github.com/alanzorzi/crud-go/app/controllers"
 	"github.com/alanzorzi/crud-go/app/repository"
@@ -12,15 +13,21 @@ import (
 func RegisterRoutes(r *gin.Engine, db *sql.DB) {
 	userRepo := repository.NewUserRepository(db)
 
-	// Injetar a service
 	userService := services.NewUserService(userRepo)
+	authService := services.NewAuthService(userRepo)
 
-	// Injetar a service no controller
 	userController := controllers.NewUserController(userService)
+	authController := controllers.NewAuthController(authService)
 
-	r.GET("/users", userController.GetAllUsers)
-	r.GET("/user/:id", userController.GetUserById)
-	r.POST("/createUser", userController.CreateUser)
-	r.PUT("/updateUser/:id", userController.UpdateUser)
-	r.DELETE("/deleteUser/:id", userController.DeleteUser)
+	r.POST("/login", authController.Login)
+
+	authRoutes := r.Group("/")
+	authRoutes.Use(middleware.AuthMiddleware())
+	{
+		authRoutes.GET("/users", userController.GetAllUsers)
+		authRoutes.GET("/user/:id", userController.GetUserById)
+		authRoutes.POST("/users", userController.CreateUser)
+		authRoutes.PUT("/users/:id", userController.UpdateUser)
+		authRoutes.DELETE("/users/:id", userController.DeleteUser)
+	}
 }

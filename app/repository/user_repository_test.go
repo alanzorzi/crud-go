@@ -21,16 +21,16 @@ func TestUserRepository_CreateUser(t *testing.T) {
 
 	// Cria um usuário de teste
 	user := &model.User{
-		ID:    "1",
-		Name:  "John Doe",
-		Age:   30,
-		Email: "johndoe@example.com",
-		Senha: "password123",
+		ID:       "1",
+		Name:     "John Doe",
+		Age:      30,
+		Email:    "johndoe@example.com",
+		Password: "password123",
 	}
 
 	// Define o comportamento esperado para o banco de dados mockado
 	mock.ExpectExec("INSERT INTO user_data").
-		WithArgs(user.ID, user.Name, user.Age, user.Email, user.Senha).
+		WithArgs(user.ID, user.Name, user.Age, user.Email, user.Password).
 		WillReturnResult(sqlmock.NewResult(1, 1)) // Sucesso na inserção
 
 	// Executa o método a ser testado
@@ -58,16 +58,16 @@ func TestCreateUser_Error(t *testing.T) {
 
 	// Cria um usuário de teste
 	user := &model.User{
-		ID:    "2",
-		Name:  "Jane Doe",
-		Age:   25,
-		Email: "janedoe@example.com",
-		Senha: "password456",
+		ID:       "2",
+		Name:     "Jane Doe",
+		Age:      25,
+		Email:    "janedoe@example.com",
+		Password: "password456",
 	}
 
 	// Define o comportamento esperado para o banco de dados mockado (erro na inserção)
 	mock.ExpectExec("INSERT INTO user_data").
-		WithArgs(user.ID, user.Name, user.Age, user.Email, user.Senha).
+		WithArgs(user.ID, user.Name, user.Age, user.Email, user.Password).
 		WillReturnError(assert.AnError) // Erro durante a inserção
 
 	// Executa o método a ser testado
