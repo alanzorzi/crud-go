@@ -15,6 +15,17 @@ func NewAuthController(service serviceInterface.AuthServiceInterface) *AuthContr
 	return &AuthController{authService: service}
 }
 
+// LoginUser allows a user to log in and obtain an authentication token.
+// @Summary User User
+// @Description Allows a user to log in and receive an authentication token.
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param userLogin body model.User true "User login credentials"
+// @Success 200 {object} model.User "Login successful, authentication token provided"
+// @Header 200 {string} Authorization "Authentication token"
+// @Failure 403 {object} string "Error: Invalid login credentials"
+// @Router /login [post]
 func (ctrl *AuthController) Login(c *gin.Context) {
 	var user model.User
 	if err := c.ShouldBindJSON(&user); err != nil {

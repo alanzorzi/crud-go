@@ -1,0 +1,54 @@
+definitions:
+  model.User:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - age
+    - email
+    - id
+    - name
+    - password
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Allows a user to log in and receive an authentication token.
+      parameters:
+      - description: User login credentials
+        in: body
+        name: userLogin
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful, authentication token provided
+          headers:
+            Authorization:
+              description: Authentication token
+              type: string
+          schema:
+            $ref: '#/definitions/model.User'
+        "403":
+          description: 'Error: Invalid login credentials'
+          schema:
+            type: string
+      summary: User User
+      tags:
+      - Authentication
+swagger: "2.0"

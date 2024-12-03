@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/alanzorzi/crud-go/app/routes"
+	_ "github.com/alanzorzi/crud-go/docs"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql" // Importação anônima para registrar o driver
 )

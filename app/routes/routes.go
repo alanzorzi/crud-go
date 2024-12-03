@@ -8,6 +8,9 @@ import (
 	"github.com/alanzorzi/crud-go/app/repository"
 	"github.com/alanzorzi/crud-go/app/services"
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func RegisterRoutes(r *gin.Engine, db *sql.DB) {
@@ -20,6 +23,8 @@ func RegisterRoutes(r *gin.Engine, db *sql.DB) {
 	authController := controllers.NewAuthController(authService)
 
 	r.POST("/login", authController.Login)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	authRoutes := r.Group("/")
 	authRoutes.Use(middleware.AuthMiddleware())
