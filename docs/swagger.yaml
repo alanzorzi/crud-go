@@ -4,6 +4,7 @@ definitions:
       age:
         type: integer
       email:
+        example: test@test.com
         type: string
       id:
         type: string

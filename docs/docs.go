@@ -77,7 +77,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "test@test.com"
                 },
                 "id": {
                     "type": "string"
